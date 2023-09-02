@@ -5,7 +5,7 @@ import about_us_2 from "../assets/images/about-us-2.jpg"
 const AboutUs = () => {
   return (
     <div className="text-center about-us-parent">
-        <h3 className="page-title">About AgriMart</h3>
+        <h3 className="page-title">About FloralFurnish</h3>
       <div className="about-us-container">
         <div className="top-row">
           <div className="left-image">
@@ -13,16 +13,15 @@ const AboutUs = () => {
           </div>
           <div className="right-content">
             <p>
-              Welcome to AgriMart, your one-stop online marketplace for fresh and
-              high-quality agricultural products. Our mission is to connect farmers
-              and consumers, making it easier for you to access the freshest
-              produce from local farms.
+            Welcome to FloralFurnish, your premier destination for exquisite furniture 
+            and a seamless shopping experience. At FloralFurnish, we believe that every 
+            space deserves to be adorned with furniture that embodies style, comfort, and 
+            functionality. 
             </p>
             <p>
-              At AgriMart, we prioritize sustainability and supporting local
-              farmers. We believe in the importance of promoting environmentally
-              friendly practices and ensuring fair prices for both farmers and
-              consumers.
+            Our passion for design, commitment to quality, and dedication 
+            to customer satisfaction set us apart as a trusted name in the world of home 
+            furnishings
             </p>
           </div>
         </div>

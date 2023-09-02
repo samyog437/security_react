@@ -72,45 +72,7 @@ const UserProfile = (props) => {
     setIsModalVisible(false);
   };
 
-  const handleInputChange = (e) => {
-    setUpdatedUserData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(imageFile);
-    setImage(imageFile);
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const formData = new FormData();
-      if (image) {
-        formData.append("image", image);
-      }
-      formData.append("username", updatedUserData.username);
-      formData.append("fullname", updatedUserData.fullname);
-
-      const response = await axios.put(`/user/${path}`, formData, config);
-      setUserData((prevUserData) => {
-        return { ...prevUserData, username: response.data.data.username };
-      });      
-      setEditMode(false);
-      setIsModalVisible(false);
-      toast.success('Changed user details successfully')
-    } catch (err) {
-      console.error(err);
-      toast.error(err)
-    }
-  };
-
+  
   const handleImageError = (e) => {
     e.target.onerror = null;
     e.target.src = thumb;
@@ -198,7 +160,6 @@ const UserProfile = (props) => {
               {!editMode && (
                 <>
                   <p className="user-info-username">{userData.username}</p>
-                  <FormOutlined className="edit-outline" onClick={handleEdit} />
                   <div className="user-data-parent">
                     <div className="user-data-display">
                       <div className="user-data-item">
@@ -256,7 +217,6 @@ const UserProfile = (props) => {
                                 {product.productId && (
                                   <div className="cart-name">
                                     {product.productId.title}
-                                    ({product.quantity}kg)
                                   </div>
                                 )}
                               </div>
@@ -318,58 +278,6 @@ const UserProfile = (props) => {
         onCancel={handleCancelEdit}
         footer={null}
       >
-        <Form onFinish={handleSubmit} layout="vertical">
-          <Form.Item label="Profile Image">
-            <div>
-              <input type="file" id="image-upload" accept="image/*" onChange={handleImageChange} />
-            </div>
-            <div className="preview-container">
-              {previewImage && <img src={previewImage} alt="Profile Thumbnail" />}
-            </div>
-          </Form.Item>
-          <Form.Item
-            label="Username"
-            rules={[
-              {
-                required: true,
-                message: "Username is required",
-              },
-              {
-                min: 5,
-                message: "Username must be at least 5 characters long",
-              },
-            ]}
-          >
-            <Input
-              name="username"
-              value={updatedUserData.username}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Full Name">
-            <Input
-              name="fullname"
-              value={updatedUserData.fullname}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <div>
-            <Button
-              className="primary-btn"
-              htmlType="submit"
-              style={{ marginRight: "10px" }}
-            >
-              Save
-            </Button>
-            <Button
-              className="clear-cart-button"
-              style={{ color: "white" }}
-              onClick={handleCancelEdit}
-            >
-              Cancel
-            </Button>
-          </div>
-        </Form>
       </Modal>
       <Modal
         title="Change Password"

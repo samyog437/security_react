@@ -14,13 +14,13 @@ const ContactUs = () => {
         You can contact us through the following methods:
         <ul className="contact-us-list">
           <li>
-            <a href="mailto:info@agrimart.com" className="contact-us-link">Email: info@agrimart.com</a>
+            <a href="mailto:info@floralfurnish.com" className="contact-us-link">Email: info@floralfurnish.com</a>
           </li>
           <li>
             <a href="tel:123-456-789" className="contact-us-link">Phone: 123-456-7890</a>
           </li>
           <li>
-            <a href="https://www.agrimart.com/contact-us" className="contact-us-link">Address: 123 AgriMart Street, City, Country</a>
+            <a href="#" className="contact-us-link">Address: 123 Sanothimi, Bhaktapur, Nepal</a>
           </li>
         </ul>
       </p>

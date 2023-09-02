@@ -17,7 +17,6 @@ const DeliveryPage = () => {
     const quantity = parseInt(queryParams.get("quantity"));
     const totalPrice = parseInt(queryParams.get("total"))
     const quantities = Array.from(queryParams.values()).map((value) => parseInt(value));
-    // const {cartItems} = useContext(CartContext)
     const navigate = useNavigate();
 
     const handleCityChange = (e) => {
@@ -41,7 +40,42 @@ const DeliveryPage = () => {
     const handleGoBack = () => {
       navigate(-1); // Navigate back to the previous page
     };
-    
+
+    const handleDeliverySubmit = () => {
+      if (city && area && landmark && contact) {
+        if (contact.length === 10) {
+          const deliveryData = {
+            city,
+            area,
+            landmark,
+            contactNo: parseInt(contact),
+            totalPrice,
+           
+          };
+      
+          try {
+            // console.log(sessionStorage.getItem("deliveryData"));
+            sessionStorage.setItem("addressData", JSON.stringify(deliveryData));
+            navigate(`/delivery/payment?total=${totalPrice}`);
+          } catch (error) {
+            console.log(`the path is ${path}`);
+            console.log(error);
+          }
+        } else {
+          toast.error('Contact number must be 10 characters long. ')
+          document.getElementById("contact").classList.add("invalid-field");
+        }
+      } else {
+        // Display an error message or perform any desired action
+        toast.error('Please fill in all the fields.');
+        if (!city) document.getElementById("city").classList.add("invalid-field");
+        if (!area) document.getElementById("area").classList.add("invalid-field");
+        if (!landmark)
+          document.getElementById("landmark").classList.add("invalid-field");
+        if (!contact) document.getElementById("contact").classList.add("invalid-field");
+        }
+    };
+
     
     return (
         <>
@@ -66,7 +100,7 @@ const DeliveryPage = () => {
               id="city"
               name="city"
               required="required"
-              value={city}
+              // value={city}
               onChange={handleCityChange}
             />
           </div>
@@ -77,7 +111,7 @@ const DeliveryPage = () => {
               id="area"
               name="area"
               required="required"
-              value={area}
+              // value={area}
               onChange={handleAreaChange}
             />
           </div>
@@ -88,7 +122,7 @@ const DeliveryPage = () => {
               id="landmark"
               name="landmark"
               required="required"
-              value={landmark}
+              // value={landmark}
               onChange={handleLandmarkChange}
             />
           </div>
@@ -99,12 +133,12 @@ const DeliveryPage = () => {
               id="contact"
               name="contact"
               required="required"
-              value={contact}
+              // value={contact}
               onChange={handleContactChange}
             />
           </div>
           <div className="btn-group">
-            <button className="deliver">Proceed to Pay</button>
+            <button className="deliver" onClick={handleDeliverySubmit}>Proceed to Pay</button>
           </div>
         </div>
       </div>

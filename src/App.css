@@ -131,7 +131,7 @@
   border: 0;
   border-radius: 4px;
   outline: none;
-  background: #289A43;
+  background: rgb(124, 124, 230);
 }
 
   .btn-group {
@@ -352,11 +352,11 @@ img.searchImg {
 
 .searchImg-container .ant-input-group-addon button {
   height: 40px;
-  background-color: #289A43;
+  background-color: rgb(72, 72, 167);
 }
 
 .searchImg-container .ant-input-group-addon button:hover {
-  background-color: #31be52;
+  background-color: rgb(171, 171, 247);
 }
 
 .view-more-button {
@@ -736,7 +736,7 @@ width: 800px;
 }
 
 .ant-pagination-item-active {
-  border-color: #227b37!important;
+  border-color: rgb(124, 124, 230)!important;
 }
 
 .vertical-center {

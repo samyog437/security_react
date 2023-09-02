@@ -14,13 +14,13 @@ const Header = (props) => {
       className="navigation-bar"
     >
       <Link to={"/"} className="no-link">
-        <div className="navbar-logo">FruitfulBites</div>
+        <div className="navbar-logo">FloralFurnish</div>
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/products" className="no-link" style={{ marginRight: "20px" }}>
-            All Fruits
+            All Furnitures
           </Link>
           <Link to="/about-us" className="no-link" style={{ marginRight: "20px" }}>
             About Us

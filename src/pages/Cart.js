@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import thumb from "../assets/images/thumbnail.jpg";
 import { ArrowDownOutlined, ArrowLeftOutlined, CloseOutlined, DeleteOutlined, ExclamationCircleOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { Modal, Button, Empty } from "antd";
 import axios from "axios";
 
@@ -10,13 +10,17 @@ const { confirm } = Modal;
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  
+
   const token = localStorage.getItem('token');
+  const publicFolder = "http://localhost:5000/image/";
+
   
   useEffect(() => {
     // Fetch the cart items from the server
     axios.get('/cart', { headers: { Authorization: `Bearer ${token}` } })
       .then(response => {
-        console.log("Response data", response.data.productId)
+        console.log("Response data", response.data)
         setCartItems(response.data);
       })
       .catch(error => {
@@ -28,9 +32,15 @@ const Cart = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  const handleProceedCheckout = () => {
+    const totalPrice = cartItems.reduce((total, item) => total + (item.productId.price), 0);
+    sessionStorage.setItem("deliveryData", JSON.stringify(cartItems))
+    navigate(`/delivery?total=${totalPrice}`)
+  }
+
   const handleDelete = (itemId) => {
     // Send DELETE request to remove the item from the cart
-    axios.delete('/cart/removeFromCart', {
+    axios.delete('cart/removeFromCart', {
       headers: { Authorization: `Bearer ${token}` },
       data: { cartItemId: itemId } // Send the cartItemId in the request body
     })
@@ -67,7 +77,7 @@ const Cart = () => {
           {cartItems.map(item => (
             <div key={item._id} className="cart-list">
               <div className="cart-item-left">
-                <img className="product-image" src={item.productId.image || thumb} alt="Product Thumbnail"  
+                <img className="product-image" src={ publicFolder + item.productId.image || thumb} alt="Product Thumbnail"  
                 style={{
                         width: "100px",
                         height: "70px",
@@ -76,14 +86,14 @@ const Cart = () => {
                 <h4>{item.productId.title}</h4>
               </div>
               <div className="cart-item-right">
-                <p>Price: ${item.productId.price}</p>
+                <p>Price: Rs. {item.productId.price}</p>
                 <Button icon={<DeleteOutlined />} onClick={() => handleDelete(item._id)} danger>
                   Remove
                 </Button>
               </div>
             </div>
           ))}
-          <Button type="primary" onClick={() => navigate('/checkout')}>
+          <Button type="primary" onClick={handleProceedCheckout}>
             Proceed to Checkout
           </Button>
         </div>

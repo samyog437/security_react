@@ -8,8 +8,7 @@ import { Container } from 'react-bootstrap';
 import Header from "../src/components/Header";
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import AllVegetables from './pages/AllVegetables';
+import AllFurnitures from './pages/AllFurnitures';
 import ProductPage from "./pages/ProductPage";
 import DeliveryPage from "./pages/DeliveryPage";
 import PaymentPage from "./pages/PaymentPage";
@@ -55,17 +54,17 @@ function App() {
       <Header user={user}/>
       <Container fluid className="app-container" style={{minHeight: "100vh"}}>
         <Routes>
-          <Route path="/" element={<AllVegetables/>}/>
+          <Route path="/" element={<AllFurnitures/>}/>
           <Route path="/cart" element={userId ? <Cart/> : <Login/>} />
-          <Route path="/products" element={<AllVegetables/>}/>  
+          <Route path="/products" element={<AllFurnitures/>}/>  
           <Route path="/products/:products_id" element={<ProductPage/>} user={user}/>
           <Route path="/delivery" element={userId ? <DeliveryPage user_id={userId} token={token}/> : <Login/>} />
           <Route path="/buy-now/delivery" element={userId? <SingleDeliveryPage user_id={userId} token={token}/> : <Login/>} />
           <Route path="/delivery/payment" element={userId? <PaymentPage/> : <Login/>} />
           <Route path="/user/:user_id" element={<UserProfile user={user} token={token} orders={orders} />} />
           <Route path="/admin" element={isAdmin ? <AdminPage user={user} token={token}/> : <Login/>} />
-          <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
-          <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
+          <Route path="/login" element={userId ? <AllFurnitures/> : <Login/>}/>
+          <Route path="/register" element={userId ? <AllFurnitures /> : <Register/>}/>
           <Route path="/about-us" element={<AboutUs/>}/>
           <Route path="/contact-us" element={<ContactUs/>}/>
         </Routes>

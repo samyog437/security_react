@@ -119,58 +119,6 @@ const AdminPage = (props) => {
     fetchDeliveries();
   }, []);
 
-  const handleEdit = (productId) => {
-    setCurrentProductId(productId);
-    setEditModalVisible(true);
-    const product = products.find((item) => item._id === productId);
-    if (product) {
-      setTitle(product.title);
-      setPrice(product.price);
-      setPreviewImage(publicFolder + product.image);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setEditModalVisible(false);
-    setCurrentProductId(null);
-    setTitle("");
-    setPrice("");
-    setImage(null);
-    setPreviewImage(null);
-  };
-
-  const handleSaveEdit = () => {
-    const updatedProduct = {
-      title,
-      price,
-      image,
-    };
-    const formData = new FormData();
-    formData.append("title", updatedProduct.title);
-    formData.append("price", updatedProduct.price);
-    if (updatedProduct.image) {
-      formData.append("image", updatedProduct.image);
-    }
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${props.token}`,
-      },
-    };
-    axios
-      .put(`/products/${currentProductId}`, formData, config)
-      .then((response) => {
-        console.log(response.data.product._id);
-        toast.success("Product Updated Successfully");
-        fetchProducts(); // Refresh the products list
-        handleCancelEdit();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Error occurred while updating the product");
-      });
-  };
-
   const handleDeliveryStatusChange = async (deliveryId, status) => {
     try {
       const updatedDelivery = {
@@ -265,7 +213,7 @@ const AdminPage = (props) => {
             />
           </TabPane>
           <TabPane tab="Product List" key="2">
-            <ProductListTab products={products} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <ProductListTab products={products} handleDelete={handleDelete} />
           </TabPane>
           <TabPane tab="Orders" key="3">
           <OrdersTab
@@ -278,28 +226,6 @@ const AdminPage = (props) => {
             <UserListTab/>
           </TabPane>
         </Tabs>
-
-        {/* Edit Product Modal */}
-        <Modal
-          title="Edit Product"
-          visible={editModalVisible}
-          onCancel={handleCancelEdit}
-          onOk={handleSaveEdit}
-          footer={null}
-          destroyOnClose
-        >
-          <AddProductTab
-            handleSubmit={handleSaveEdit}
-            isEditing={editModalVisible}
-            title={title}
-            handleTitleChange={handleTitleChange}
-            price={price}
-            handlePriceChange={handlePriceChange}
-            handleImageChange={handleImageChange}
-            previewImage={previewImage}
-          />
-        </Modal>
-
       </div>
       <ToastContainer />
     </>

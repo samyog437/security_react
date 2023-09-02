@@ -48,7 +48,7 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange, handleOrderDelete }
       dataIndex: "totalPrice",
     },
     {
-      title: "Products (in kg)",
+      title: "Products",
       dataIndex: "products",
       render: (products) => (
         <ul>
@@ -56,7 +56,7 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange, handleOrderDelete }
             <li key={product.productId}>
               {product.productId ? (
                 <>
-                  {product.productId.title} - Quantity: {product.quantity}
+                  {product.productId.title}
                 </>
               ) : (
                 "NA"

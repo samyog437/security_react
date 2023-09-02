@@ -73,7 +73,10 @@ const ProductPage = ({user}) => {
 
     const handleBuyNow = () => {
       if (!token) {
-        navigate("/login")
+        toast.error("Can't buy product without logging in");
+        setTimeout(() => {
+          navigate("/login")
+        }, 2000);
         return;
       }
 
@@ -86,7 +89,14 @@ const ProductPage = ({user}) => {
     };
     
     const addToCart = async () => {
-      console.log("Product ID", product._id)
+      // console.log("Product ID", product._id)
+      if (!token) {
+        toast.error("Can't add to cart without logging in");
+        setTimeout(() => {
+          navigate("/login")
+        }, 2000);
+        return;
+      }
 
       try {
         // Send a POST request to update the user's cart on the server
@@ -229,7 +239,7 @@ const ProductPage = ({user}) => {
                       <div className="blog-title">{product.title}</div>
                     </div>  
 
-                    <div className="blog-content">{`Rs. ${product.price}/kg`}</div>
+                    <div className="blog-content">{`Rs. ${product.price}`}</div>
                     <div className="rating-count">
                         <button className="rate-btn" onClick={handleReviewButton}>Rate <StarOutlined style={{color:'white'}} /></button>
                         <span style={{marginLeft: "2rem"}}>{product.reviews.length} ratings</span>
